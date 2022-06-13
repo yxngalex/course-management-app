@@ -22,6 +22,13 @@ public class UserController {
         return "admin";
     }
 
+    @GetMapping("/add_new_user")
+    public String addNewUser(Model model) {
+        User user = new User();
+        model.addAttribute("user", user);
+        return "add_user";
+    }
+
     @GetMapping("/register")
     public String register(Model model) {
         User user = new User();
