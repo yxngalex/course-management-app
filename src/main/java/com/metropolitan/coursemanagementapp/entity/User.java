@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -40,6 +41,9 @@ public class User {
     @JsonIgnore
     private List<Role> roles = new ArrayList<>();
 
+    @NotNull(message = "Passwords do not match")
+    private String confirmPassword;
+
     private boolean hasRole(String role) {
         Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>)
                 SecurityContextHolder.getContext().getAuthentication().getAuthorities();
@@ -51,5 +55,23 @@ public class User {
             }
         }
         return hasRole;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+        checkPassword();
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+        checkPassword();
+    }
+
+    private void checkPassword() {
+        if (this.password == null || this.confirmPassword == null) {
+            return;
+        } else if (!this.password.equals(confirmPassword)) {
+            this.confirmPassword = null;
+        }
     }
 }
