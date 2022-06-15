@@ -46,7 +46,7 @@
                     <select class="form-control" id="role" th:field="*{role}">
                         <option th:each="role : ${roleList}"
                                 th:value="${{role}}"
-                                th:utext="${role.name}"/>
+                                th:utext="${role.name}"></option>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>

@@ -21,14 +21,13 @@ public class UserController {
     @GetMapping("/admin")
     public String getAllUsers(Model model) {
         model.addAttribute("getUsers", userService.getAllUsers());
-        /*stranica ne postoji*/
         return "admin/user_table";
     }
 
     @GetMapping("/add_new_user")
     public String addNewUser(Model model) {
         User user = new User();
-        List<Role> roleList =  roleService.getAllRoles();
+        List<Role> roleList = roleService.getAllRoles();
         model.addAttribute("user", user);
         model.addAttribute("roleList", roleList);
         return "admin/add_user";
@@ -37,7 +36,7 @@ public class UserController {
     @GetMapping("/register")
     public String register(Model model) {
         User user = new User();
-        List<Role> roleList =  roleService.getAllRoles();
+        List<Role> roleList = roleService.getAllRoles();
         model.addAttribute("user", user);
         model.addAttribute("roleList", roleList);
         return "core/register";
@@ -46,29 +45,30 @@ public class UserController {
     @PostMapping("/save_user")
     public String saveUser(@ModelAttribute("user") User user) {
         userService.saveUser(user);
-        /*menja se po dogovoru*/
-        return "redirect:/user/user_table";
+        return "redirect:/user/admin";
+    }
+
+    @PostMapping("/update_user")
+    public String updateUser(@ModelAttribute("user") User user) {
+        userService.updateUser(user);
+        return "redirect:/user/admin";
     }
 
     @PostMapping(value = "/delete_user/{userId}")
     public String deleteUser(@PathVariable Integer userId) {
-        List<User> userList = userService.getAllUsers();
-        for (User user : userList) {
-            if (user.getId() == userId) {
-                userService.deleteById(userId);
-            }
-        }
-        /*menja se po dogovoru*/
-        return "redirect:/index";
+        userService.deleteById(userId);
+        return "redirect:/user/admin";
     }
 
     @GetMapping("/edit_user/{userId}")
     public String editUser(@PathVariable Integer userId, Model model) {
         List<User> userList = userService.getAllUsers();
+        List<Role> roleList = roleService.getAllRoles();
 
         for (User user : userList) {
             if (user.getId() == userId) {
                 model.addAttribute("user", user);
+                model.addAttribute("roleList", roleList);
             }
 
         }

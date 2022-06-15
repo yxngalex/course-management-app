@@ -32,28 +32,8 @@ public class User {
     private String email;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
+    @JoinColumn(name = "role_fk", referencedColumnName = "role_id")
     @JsonIgnore
     private Role role = new Role();
 
-    @NotNull(message = "Passwords do not match")
-    private String confirmPassword;
-
-    public void setPassword(String password) {
-        this.password = password;
-        checkPassword();
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-        checkPassword();
-    }
-
-    private void checkPassword() {
-        if (this.password == null || this.confirmPassword == null) {
-            return;
-        } else if (!this.password.equals(confirmPassword)) {
-            this.confirmPassword = null;
-        }
-    }
 }

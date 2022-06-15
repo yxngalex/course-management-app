@@ -10,22 +10,25 @@
 <div class="container">
     <a class="btn btn-secondary" href="http://localhost:8080/logout">Logout</a>
     <h1>Edit user</h1>
-    <form action="#" th:action="@{/saveUser}" th:object="${user}" th:method="POST">
+    <form action="#" th:action="@{/user/update_user}" th:object="${user}" th:method="POST">
+        <input type="hidden" id="userId" th:field="*{id}"
+               class="form-control col-4">
         <label for="username1">
             <input type="text" id="username1" th:field="*{username}" placeholder="User name"
                    class="form-control col-4">
         </label>
         <label for="password1">
-            <input type="text" id="password1" th:field="*{password}" placeholder="Password" class="form-control col-4">
+            <input type="password" id="password1" th:field="*{password}" placeholder="Password" class="form-control col-4">
         </label>
-        <label for="confirmPassword1">
-            <input type="text" id="confirmPassword1" th:field="*{confirmPassword}" placeholder="Last name"
+        <label for="email">
+            <input type="text" id="email" th:field="*{email}" placeholder="Email"
                    class="form-control col-4">
         </label>
-        <label for="role1">
-<!--            mora da bude dropdown -->
-            <input type="text" id="role1" th:field="*{role}" placeholder="Role" class="form-control col-4">
-        </label>
+        <label for="role1"><select id="role1" th:field="*{role}">
+            <option th:each="role : ${roleList}"
+                    th:value="${{role}}"
+                    th:utext="${role.name}"></option>
+        </select><br/></label>
         <button type="submit" class="btn btn-info col-2">Save</button>
     </form>
 </div>
