@@ -23,9 +23,4 @@ public class Role {
     @Lob
     @Column(name = "NAME")
     private String name;
-
-    @ManyToMany(mappedBy = "roles")
-    @JsonIgnore
-    @ToString.Exclude
-    private List<User> users;
 }

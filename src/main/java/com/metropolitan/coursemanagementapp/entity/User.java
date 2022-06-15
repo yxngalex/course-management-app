@@ -36,26 +36,13 @@ public class User {
     @Column(name = "EMAIL")
     private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
     @JsonIgnore
-    private List<Role> roles = new ArrayList<>();
+    private Role role = new Role();
 
     @NotNull(message = "Passwords do not match")
     private String confirmPassword;
-
-    private boolean hasRole(String role) {
-        Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>)
-                SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-        boolean hasRole = false;
-        for (GrantedAuthority authority : authorities) {
-            hasRole = authority.getAuthority().equals(role);
-            if (hasRole) {
-                break;
-            }
-        }
-        return hasRole;
-    }
 
     public void setPassword(String password) {
         this.password = password;
