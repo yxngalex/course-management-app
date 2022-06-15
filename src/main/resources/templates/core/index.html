@@ -2,12 +2,14 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Courses</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 </head>
 <body>
     <h2>Index works!</h2>
     <div class="container">
-<!--        <a class="btn btn-primary" th:href =  "@{/showNewEmployeeForm}"> Add Employee </a>-->
+        <a class="btn btn-primary" th:href =  "@{/course/show_new_course_form}"> Add course </a>
         <h1>Courses</h1>
         <table class="table table-striped table-responsive-md">
             <thead>
@@ -18,12 +20,12 @@
             <tbody>
             <tr th:each="course :  ${courseList}">
                 <td th:text="${course.name}"></td>
-<!--                <td><a th:href="@{/showEditEmployeeForm/{id}(id=${employee.id})}" class="btn btn-primary">Edit</a></td>-->
-<!--                <td>-->
-<!--                    <form method="POST" th:action="@{/deleteEmployee/{id}(id=${employee.id})}">-->
-<!--                        <button type="submit" name="submit" value="value" class="btn btn-danger">DELETE</button>-->
-<!--                    </form>-->
-<!--                </td>-->
+                <td><a th:href="@{/course/show_update_course_form/{id}(id=${course.id})}" class="btn btn-primary">Edit</a></td>
+                <td>
+                    <form method="POST" th:action="@{/course/delete_course/{id}(id=${course.id})}">
+                        <button type="submit" name="submit" value="value" class="btn btn-danger">DELETE</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>
