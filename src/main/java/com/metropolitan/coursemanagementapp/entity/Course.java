@@ -22,14 +22,6 @@ public class Course {
     @JoinColumn(name = "CATEGORY_ID", nullable = false)
     private Category category;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "REFUND_ID")
-    private Refund refund;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "COMMENT_ID")
-    private Comment comment;
-
     @Lob
     @Column(name = "NAME")
     private String name;

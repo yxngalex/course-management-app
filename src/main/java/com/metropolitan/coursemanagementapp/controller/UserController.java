@@ -26,22 +26,21 @@ public class UserController {
     public String addNewUser(Model model) {
         User user = new User();
         model.addAttribute("user", user);
-        return "add_user";
+        return "admin/add_user";
     }
 
     @GetMapping("/register")
     public String register(Model model) {
         User user = new User();
         model.addAttribute("user", user);
-
-        return "register";
+        return "core/register";
     }
 
     @PostMapping("/save_user")
     public String saveUser(@ModelAttribute("user") User user) {
         userService.saveUser(user);
 
-        return "redirect:/";
+        return "redirect:/core/index";
     }
 
     @PostMapping(value = "/delete_user/{userId}")
@@ -52,7 +51,7 @@ public class UserController {
                 userService.deleteById(userId);
             }
         }
-        return "redirect:/";
+        return "redirect:/core/index";
     }
 
     @GetMapping("/edit_user/{userId}")
@@ -65,7 +64,7 @@ public class UserController {
             }
 
         }
-        return "edit_user";
+        return "admin/edit_user";
     }
 
 }

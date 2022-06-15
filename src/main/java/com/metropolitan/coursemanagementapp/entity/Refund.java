@@ -24,4 +24,8 @@ public class Refund {
     @Lob
     @Column(name = "REFUND_COMMENT")
     private String refundComment;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "COURSE_ID")
+    private Course course;
 }

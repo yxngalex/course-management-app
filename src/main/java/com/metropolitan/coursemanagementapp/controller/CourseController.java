@@ -14,17 +14,17 @@ public class CourseController {
 
     private final CourseService courseService;
 
-    @GetMapping("/get_all")
+    @GetMapping("/")
     public String getAllCourses(Model model){
         model.addAttribute("courseList", courseService.getAllCourses());
-        return "index";
+        return "core/index";
     }
 
     @GetMapping("/show_new_course_form")
     public String showNewUserForm(Model model){
         Course course = new Course();
         model.addAttribute("course", course);
-        return "new_course";
+        return "author/new_course";
     }
 
     @PostMapping(value = "/delete_course/{id}")
@@ -42,6 +42,6 @@ public class CourseController {
     @GetMapping("/show_update_course_form/{id}")
     public String showEditCourseForm(@PathVariable Integer id, Model model){
         model.addAttribute("course", courseService.getCourseById(id));
-        return "edit_course";
+        return "author/edit_course";
     }
 }

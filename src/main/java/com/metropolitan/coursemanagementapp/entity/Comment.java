@@ -24,4 +24,8 @@ public class Comment {
     @Lob
     @Column(name = "COMMENT")
     private String comment;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "COURSE_ID")
+    private Course course;
 }
