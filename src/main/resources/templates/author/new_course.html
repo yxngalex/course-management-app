@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Update course</h1>
-    <form action="#" th:action="@{/course/save_course}" th:object="${course}" th:method ="POST">
+    <form action="#" th:action="@{/course/save_course}" th:object="${course}" method ="POST">
         <input type="hidden" th:field="*{id}">
 
         <label for="category">Choose category</label>

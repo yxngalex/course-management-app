@@ -22,7 +22,7 @@
             <h3>Register</h3>
         </div>
         <div class="card-body">
-            <form th:action="@{/save_user}" method="post" th:object="${user}">
+            <form action="#" th:action="@{/user/save_user}" method="post" th:object="${user}">
                 <div class="form-group">
                     <label for="user_name">Username</label>
                     <input type="text" class="form-control" id="user_name" aria-describedby="user_name"
@@ -44,12 +44,14 @@
                 <div class="form-group">
                     <label for="role">Role</label>
                     <select class="form-control" id="role" th:field="*{role}">
-                        <option th:each="role : ${role}" th:value="${role}" th:text="${role}"></option>
+                        <option th:each="role : ${roleList}"
+                                th:value="${{role}}"
+                                th:utext="${role.name}"/>
                     </select>
                 </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </div>
 </body>

@@ -22,7 +22,7 @@ public class UserController {
     public String getAllUsers(Model model) {
         model.addAttribute("getUsers", userService.getAllUsers());
         /*stranica ne postoji*/
-        return "admin";
+        return "admin/user_table";
     }
 
     @GetMapping("/add_new_user")
@@ -37,7 +37,9 @@ public class UserController {
     @GetMapping("/register")
     public String register(Model model) {
         User user = new User();
+        List<Role> roleList =  roleService.getAllRoles();
         model.addAttribute("user", user);
+        model.addAttribute("roleList", roleList);
         return "core/register";
     }
 
@@ -45,7 +47,7 @@ public class UserController {
     public String saveUser(@ModelAttribute("user") User user) {
         userService.saveUser(user);
         /*menja se po dogovoru*/
-        return "redirect:/index";
+        return "redirect:/user/user_table";
     }
 
     @PostMapping(value = "/delete_user/{userId}")
