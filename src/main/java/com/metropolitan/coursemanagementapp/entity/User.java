@@ -32,7 +32,7 @@ public class User {
     private String email;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_fk", referencedColumnName = "role_id")
+    @JoinColumn(name = "ROLE_ID")
     @JsonIgnore
     private Role role = new Role();
 
