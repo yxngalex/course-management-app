@@ -25,22 +25,24 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 //        super.configure(http);
         http.authorizeRequests()
-                .antMatchers("/user/*").hasRole("ADMIN")
+                .antMatchers("/admin/*").hasRole("ADMIN")
                 .antMatchers("/*").hasAnyRole("USER", "AUTHOR")
                 .antMatchers("/course/*").hasRole("AUTHOR")
+                .antMatchers("/order/*").anonymous()
+                .antMatchers("/register").anonymous()
                 .and()
                 .formLogin()
-                    .failureUrl("/register")
-                    .defaultSuccessUrl("/");
+                .failureUrl("/register")
+                .defaultSuccessUrl("/");
     }
 
     @Bean
-    public BCryptPasswordEncoder getPasswordEncoder(){
+    public BCryptPasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public DaoAuthenticationProvider authProvider(){
+    public DaoAuthenticationProvider authProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setPasswordEncoder(getPasswordEncoder());
         authenticationProvider.setUserDetailsService(usersDetailsService);
