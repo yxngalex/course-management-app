@@ -17,8 +17,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        super.configure(auth);
-        //auth.authenticationProvider(authProvider());
+        //super.configure(auth);
+        auth.authenticationProvider(authProvider());
     }
 
     @Override
@@ -33,18 +33,18 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .defaultSuccessUrl("/course/");
     }
 
-//    @Bean
-//    public BCryptPasswordEncoder getPasswordEncoder(){
-//        return new BCryptPasswordEncoder();
-//    }
-//
-//    @Bean
-//    public DaoAuthenticationProvider authProvider(){
-//        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-//        authenticationProvider.setPasswordEncoder(getPasswordEncoder());
-//        authenticationProvider.setUserDetailsService(usersDetailsService);
-//
-//        return authenticationProvider;
-//    }
+    @Bean
+    public BCryptPasswordEncoder getPasswordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authProvider(){
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setPasswordEncoder(getPasswordEncoder());
+        authenticationProvider.setUserDetailsService(usersDetailsService);
+
+        return authenticationProvider;
+    }
 
 }

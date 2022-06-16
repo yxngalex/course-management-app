@@ -5,6 +5,7 @@ import com.metropolitan.coursemanagementapp.entity.User;
 import com.metropolitan.coursemanagementapp.service.RoleService;
 import com.metropolitan.coursemanagementapp.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +45,9 @@ public class UserController {
 
     @PostMapping("/save_user")
     public String saveUser(@ModelAttribute("user") User user) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         userService.saveUser(user);
         return "redirect:/user/admin";
     }
@@ -70,7 +74,6 @@ public class UserController {
                 model.addAttribute("user", user);
                 model.addAttribute("roleList", roleList);
             }
-
         }
         return "admin/edit_user";
     }
