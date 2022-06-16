@@ -22,7 +22,7 @@ public class CourseController {
     @GetMapping("/")
     public String getAllCourses(Model model){
         model.addAttribute("courseList", courseService.getAllCourses());
-        return "core/index";
+        return "index";
     }
 
     @GetMapping("/show_new_course_form")

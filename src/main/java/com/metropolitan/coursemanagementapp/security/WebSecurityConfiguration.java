@@ -25,12 +25,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 //        super.configure(http);
         http.authorizeRequests()
-                .antMatchers("/user/*").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/user/*").hasRole("ADMIN")
+                .antMatchers("/*").hasAnyRole("USER", "AUTHOR")
                 .antMatchers("/course/*").hasRole("AUTHOR")
                 .and()
                 .formLogin()
-                    .failureUrl("/core/register")
-                    .defaultSuccessUrl("/course/");
+                    .failureUrl("/register")
+                    .defaultSuccessUrl("/");
     }
 
     @Bean

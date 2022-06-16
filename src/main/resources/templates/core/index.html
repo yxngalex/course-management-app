@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Courses</title>
@@ -7,6 +7,10 @@
           integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 </head>
 <body>
+    <div th:text="${#authentication.name}"></div>
+    <div sec:authorize="isAuthenticated()">
+        This content is only shown to authenticated users.
+    </div>
     <div class="container">
         <a class="btn btn-primary" th:href =  "@{/course/show_new_course_form}"> Add course </a>
         <h1>Courses</h1>
@@ -14,17 +18,27 @@
             <thead>
             <tr>
                 <th>Course name</th>
+                <th>Course price</th>
+                <div sec:authorize="hasAnyRole('ROLE_AUTHOR', 'ROLE_USER')">
+                    <th>Course operations</th>
+                </div>
             </tr>
             </thead>
             <tbody>
             <tr th:each="course :  ${courseList}">
                 <td th:text="${course.name}"></td>
-                <td><a th:href="@{/course/show_update_course_form/{id}(id=${course.id})}" class="btn btn-primary">Edit</a></td>
-                <td>
-                    <form method="POST" th:action="@{/course/delete_course/{id}(id=${course.id})}">
-                        <button type="submit" name="submit" value="value" class="btn btn-danger">DELETE</button>
-                    </form>
-                </td>
+                <td th:text="${course.price}"></td>
+                <div sec:authorize="hasRole('ROLE_USER')">
+                    <td>Buy course</td>
+                </div>
+                <div sec:authorize="hasRole('ROLE_AUTHOR')">
+                    <td><a th:href="@{/course/show_update_course_form/{id}(id=${course.id})}" class="btn btn-primary">Edit</a></td>
+                    <td>
+                        <form method="POST" th:action="@{/course/delete_course/{id}(id=${course.id})}">
+                            <button type="submit" name="submit" value="value" class="btn btn-danger">DELETE</button>
+                        </form>
+                    </td>
+                </div>
             </tr>
             </tbody>
         </table>
