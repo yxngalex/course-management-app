@@ -25,6 +25,7 @@
             <tr>
                 <th>Course name</th>
                 <th>Course price</th>
+                <td>Preview course</td>
                 <div sec:authorize="hasAnyRole('ROLE_AUTHOR', 'ROLE_USER')">
                     <th>Course operations</th>
                 </div>
@@ -34,9 +35,12 @@
             <tr th:each="course :  ${courseList}">
                 <td th:text="${course.name}"></td>
                 <td th:text="${course.price}"></td>
+                <form action="#" th:action="@{/view/{id}(id=${course.id})}" th:method="GET">
+                    <td><button type="submit" class="btn btn-success">Preview course</button></td>
+                </form>
+
                 <div sec:authorize="hasRole('ROLE_USER')">
                     <form action="#" th:action="@{/order/}" th:method="POST">
-<!--                        name je bitan-->
                         <input type="hidden" name="username" id="userId" th:value="${#authentication.name}">
                         <input type="hidden" name="course" id="course" th:value="${{course}}">
 

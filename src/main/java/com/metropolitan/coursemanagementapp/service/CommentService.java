@@ -15,4 +15,6 @@ public interface CommentService {
     Comment updateComment(Comment comment);
 
     void deleteById(Integer commentId);
+
+    List<Comment> findAllByCourseId(Integer id);
 }

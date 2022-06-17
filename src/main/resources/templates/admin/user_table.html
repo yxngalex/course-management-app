@@ -22,7 +22,7 @@
         <tbody>
         <tr th:each="user : ${getUsers}">
             <td th:text="${user.id}"></td>
-            <td class="user_password" th:text="${user.username}"></td>
+            <td th:text="${user.username}"></td>
             <td th:text="${user.email}"></td>
             <td th:text="${user.role.name}"></td>
             <td><a th:href="@{/admin/edit_user/{userId}(userId=${user.id})}" class="btn btn-primary">Edit</a></td>

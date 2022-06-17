@@ -11,14 +11,19 @@
     <h1>Update course</h1>
     <form action="#" th:action="@{/course/save_course}" th:object="${course}" th:method ="POST">
         <input type="hidden" th:field="*{id}">
+
         <label for="category">Choose category</label>
         <input id="category" type="hidden" th:field="*{category}">
+
         <label for="name">Course name</label>
         <textarea id="name" th:field="*{name}" placeholder="Course name" class="form-control col-4" rows="4" cols="50" maxlength="200" ></textarea>
+
         <label for="description">Course description</label>
         <input id="description" type="text" th:field="*{description}" placeholder="Course description" class="form-control col-4">
+
         <label for="price">Price</label>
         <input id="price" type="number" th:field="*{price}" placeholder="Course price" class="form-control col-4">
+
         <button type="submit" class="btn btn-info col-2">Save changes</button>
     </form>
 </div>

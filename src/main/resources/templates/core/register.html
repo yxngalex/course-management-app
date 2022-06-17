@@ -25,17 +25,17 @@
             <form action="#" th:action="@{/save_user}" method="post" th:object="${user}">
                 <div class="form-group">
                     <label for="user_name">Username</label>
-                    <input type="text" class="form-control" id="user_name" aria-describedby="user_name"
+                    <input required type="text" class="form-control" id="user_name" aria-describedby="user_name"
                            th:field="*{username}">
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" aria-describedby="email"
+                    <input required type="email" class="form-control" id="email" aria-describedby="email"
                            th:field="*{email}">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" th:field="*{password}">
+                    <input required minlength="3" type="password" class="form-control" id="password" th:field="*{password}">
                 </div>
                 <div class="form-group">
                     <label for="role">Role</label>

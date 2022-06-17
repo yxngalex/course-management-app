@@ -29,6 +29,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/course/*").hasRole("AUTHOR")
                 .antMatchers("/order/*").hasRole("USER")
                 .antMatchers("/*").hasAnyRole("USER", "AUTHOR", "ADMIN")
+                .antMatchers("/view/*").hasAnyRole("USER", "AUTHOR")
                 .antMatchers("/register").anonymous()
                 .and()
                 .formLogin();

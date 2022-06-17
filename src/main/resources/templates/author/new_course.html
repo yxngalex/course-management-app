@@ -19,15 +19,15 @@
     </select><br/>
 
     <label for="name">Course name</label>
-    <textarea id="name" th:field="*{name}" placeholder="Course name" class="form-control col-4" rows="4" cols="50"
+    <textarea required id="name" th:field="*{name}" placeholder="Course name" class="form-control col-4" rows="4" cols="50"
               maxlength="200"></textarea>
 
     <label for="description">Course description</label>
-    <input id="description" type="text" th:field="*{description}" placeholder="Course description"
+    <input required id="description" type="text" th:field="*{description}" placeholder="Course description"
            class="form-control col-4">
 
     <label for="price">Price</label>
-    <input id="price" type="number" min="0" th:field="*{price}" placeholder="Course price" class="form-control col-4">
+    <input required id="price" type="number" min="0" th:field="*{price}" placeholder="Course price" class="form-control col-4">
 
     <button type="submit" class="btn btn-info col-2">Save course</button>
 </form>

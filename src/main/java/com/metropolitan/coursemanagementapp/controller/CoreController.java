@@ -1,7 +1,11 @@
 package com.metropolitan.coursemanagementapp.controller;
 
+import com.metropolitan.coursemanagementapp.entity.Comment;
+import com.metropolitan.coursemanagementapp.entity.Course;
 import com.metropolitan.coursemanagementapp.entity.Role;
 import com.metropolitan.coursemanagementapp.entity.User;
+import com.metropolitan.coursemanagementapp.repository.CommentRepository;
+import com.metropolitan.coursemanagementapp.service.CommentService;
 import com.metropolitan.coursemanagementapp.service.CourseService;
 import com.metropolitan.coursemanagementapp.service.RoleService;
 import com.metropolitan.coursemanagementapp.service.UserService;
@@ -9,10 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class CoreController {
     private final UserService userService;
     private final RoleService roleService;
     private final CourseService courseService;
+    private final CommentService commentService;
 
     @GetMapping("/")
     public String getAllUsers(Model model) {
@@ -38,6 +40,30 @@ public class CoreController {
         model.addAttribute("user", user);
         model.addAttribute("roleList", roleList);
         return "core/register";
+    }
+
+    @GetMapping("/view/{id}")
+    public String viewCourse(@PathVariable Integer id, Model model){
+        List<Comment> commentList = commentService.findAllByCourseId(id);
+        Comment comment = new Comment();
+        Course course = courseService.getCourseById(id);
+        model.addAttribute("course", course);
+        model.addAttribute("commentList", commentList);
+        model.addAttribute("comment", comment);
+
+        return "core/view";
+    }
+
+    @PostMapping("/comment")
+    public String comment(@RequestParam("course") Course course, @RequestParam("comment") String comment, @RequestParam("username") String username){
+        Comment userComment = new Comment();
+        userComment.setComment(comment);
+        userComment.setCourse(course);
+        userComment.setUser(userService.getUserByUsername(username));
+
+        commentService.saveComment(userComment);
+
+        return "redirect:/view/" + course.getId();
     }
 
     @PostMapping("/save_user")

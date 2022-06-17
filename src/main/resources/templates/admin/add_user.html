@@ -12,15 +12,15 @@
     <h1>Save user</h1>
     <form action="#" th:action="@{save_user}" th:object="${user}" th:method="POST">
         <label for="username1">
-            <input type="text" id="username1" th:field="*{username}" placeholder="User name"
+            <input required type="text" id="username1" th:field="*{username}" placeholder="User name"
                    class="form-control col-4">
         </label>
         <label for="password1">
-            <input type="password" id="password1" th:field="*{password}" placeholder="Password"
+            <input required type="password" id="password1" th:field="*{password}" placeholder="Password"
                    class="form-control col-4">
         </label>
         <label for="email">
-            <input type="text" id="email" th:field="*{email}" placeholder="Email"
+            <input required type="text" id="email" th:field="*{email}" placeholder="Email"
                    class="form-control col-4">
         </label>
         <label for="role1">
