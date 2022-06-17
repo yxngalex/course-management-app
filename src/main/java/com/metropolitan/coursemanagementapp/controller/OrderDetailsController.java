@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -15,8 +16,8 @@ public class OrderDetailsController {
 
     @GetMapping()
     public String getAllOrderDetails(Model model) {
-        model.addAttribute("courseList", orderDetailsService.getAllOrderDetails());
-        return "core/index";
+        model.addAttribute("getAllOrderDetails", orderDetailsService.getAllOrderDetails());
+        return "user/order";
     }
 
 }

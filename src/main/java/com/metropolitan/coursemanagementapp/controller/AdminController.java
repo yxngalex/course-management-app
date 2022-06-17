@@ -45,7 +45,10 @@ public class AdminController {
 
     @PostMapping("/update_user")
     public String updateUser(@ModelAttribute("user") User user) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.updateUser(user);
+
         return "redirect:/admin";
     }
 

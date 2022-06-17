@@ -16,4 +16,5 @@ public interface OrderDetailsService {
 
     void deleteById(Integer orderDetailId);
 
+    List<OrderDetails> getAllByUserId(Integer userId);
 }

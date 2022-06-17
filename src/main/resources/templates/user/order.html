@@ -21,15 +21,17 @@
         </thead>
         <tbody>
         <tr th:each="orderDetails : ${getAllOrderDetails}">
-            <td th:text="${orderDetails.order.date}"></td>
-            <td th:text="${orderDetails.order.price}"></td>
-            <td th:text="${orderDetails.course.category.categoryName}"></td>
-            <td th:text="${orderDetails.course.name}"></td>
-            <td th:text="${orderDetails.course.description}"></td>
+            <div th:if="${orderDetails.order.user.username} == ${#authentication.name} ">
+                <td th:text="${orderDetails.order.date}"></td>
+                <td th:text="${orderDetails.price}"></td>
+                <td th:text="${orderDetails.course.category.categoryName}"></td>
+                <td th:text="${orderDetails.course.name}"></td>
+                <td th:text="${orderDetails.course.description}"></td>
+            </div>
         </tr>
         </tbody>
     </table>
-    <button type="button" class="btn btn-primary">Kupi</button>
+    <button type="button" class="btn btn-primary">Buy</button>
 </div>
 </body>
 </html>

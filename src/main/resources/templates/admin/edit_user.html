@@ -10,7 +10,7 @@
 <div class="container">
     <a class="btn btn-secondary" href="http://localhost:8080/logout">Logout</a>
     <h1>Edit user</h1>
-    <form action="#" th:action="@{/user/update_user}" th:object="${user}" th:method="POST">
+    <form action="#" th:action="@{/admin/update_user}" th:object="${user}" th:method="POST">
         <input type="hidden" id="userId" th:field="*{id}"
                class="form-control col-4">
         <label for="username1">

@@ -8,8 +8,14 @@
 </head>
 <body>
     <div th:text="${#authentication.name}"></div>
-    <div sec:authorize="isAuthenticated()">
-        This content is only shown to authenticated users.
+    <div sec:authorize="hasRole('ROLE_AUTHOR')">
+        <a href="../logout">Logout</a>
+    </div>
+    <div sec:authorize="hasRole('ROLE_USER')">
+        <a href="logout">Logout</a>
+    </div>
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <meta http-equiv="refresh" content="0;url=/admin">
     </div>
     <div class="container">
         <a class="btn btn-primary" th:href =  "@{/course/show_new_course_form}"> Add course </a>
@@ -29,7 +35,13 @@
                 <td th:text="${course.name}"></td>
                 <td th:text="${course.price}"></td>
                 <div sec:authorize="hasRole('ROLE_USER')">
-                    <td>Buy course</td>
+                    <form action="#" th:action="@{/order/}" th:method="POST">
+<!--                        name je bitan-->
+                        <input type="hidden" name="username" id="userId" th:value="${#authentication.name}">
+                        <input type="hidden" name="course" id="course" th:value="${{course}}">
+
+                        <td><button type="submit" class="btn btn-success">Buy course</button></td>
+                    </form>
                 </div>
                 <div sec:authorize="hasRole('ROLE_AUTHOR')">
                     <td><a th:href="@{/course/show_update_course_form/{id}(id=${course.id})}" class="btn btn-primary">Edit</a></td>

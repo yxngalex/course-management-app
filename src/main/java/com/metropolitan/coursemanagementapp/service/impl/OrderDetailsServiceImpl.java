@@ -40,4 +40,9 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
     public void deleteById(Integer orderDetailId) {
         orderDetailsRepository.deleteById(orderDetailId);
     }
+
+    @Override
+    public List<OrderDetails> getAllByUserId(Integer userId) {
+        return orderDetailsRepository.findAllByOrder_User_Id(userId);
+    }
 }

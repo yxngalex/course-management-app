@@ -26,14 +26,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //        super.configure(http);
         http.authorizeRequests()
                 .antMatchers("/admin/*").hasRole("ADMIN")
-                .antMatchers("/*").hasAnyRole("USER", "AUTHOR")
                 .antMatchers("/course/*").hasRole("AUTHOR")
-                .antMatchers("/order/*").anonymous()
+                .antMatchers("/order/*").hasRole("USER")
+                .antMatchers("/*").hasAnyRole("USER", "AUTHOR", "ADMIN")
                 .antMatchers("/register").anonymous()
                 .and()
-                .formLogin()
-                .failureUrl("/register")
-                .defaultSuccessUrl("/");
+                .formLogin();
     }
 
     @Bean
