@@ -11,6 +11,8 @@ public interface UserService {
 
     User getUserByUsernameAndPassword(String username, String password);
 
+    User getUserByUsername(String username);
+
     User getUserByEmail(String email);
 
     User saveUser(User user);

@@ -6,8 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
@@ -32,8 +31,9 @@ public class User {
     @Column(name = "EMAIL")
     private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID")
     @JsonIgnore
-    private List<Role> roles = new ArrayList<>();
+    private Role role = new Role();
+
 }

@@ -28,16 +28,16 @@ public class RefundServiceImpl implements RefundService {
 
     @Override
     public Refund saveRefund(Refund refund) {
-        return null;
+        return refundRepository.save(refund);
     }
 
     @Override
     public Refund updateRefund(Refund refund) {
-        return null;
+        return refundRepository.save(refund);
     }
 
     @Override
     public void deleteById(Integer refundId) {
-
+        refundRepository.deleteById(refundId);
     }
 }

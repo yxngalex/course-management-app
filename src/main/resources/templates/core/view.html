@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>View course</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+</head>
+<body>
+    <a class="btn btn-primary" href="http://localhost:8080/logout">Logout</a>
+    <a href="../">Go back</a><br/>
+    <label for="category">Category</label>
+    <input id="category" type="text" th:field="*{course.category.categoryName}" readonly placeholder="Course description"
+           class="form-control col-4">
+
+    <label for="name">Course name</label>
+    <textarea id="name" th:field="*{course.name}" readonly placeholder="Course name" class="form-control col-4" rows="4" cols="50"
+              maxlength="200"></textarea>
+
+    <label for="description">Course description</label>
+    <input id="description" type="text" readonly th:field="*{course.description}" placeholder="Course description"
+           class="form-control col-4">
+
+    <label for="price">Price</label>
+    <input id="price" type="number" readonly min="0" th:field="*{course.price}" placeholder="Course price" class="form-control col-4">
+
+    <div sec:authorize="hasRole('ROLE_USER')">
+        <form action="#" th:action="@{/order/}" th:method="POST">
+            <input type="hidden" name="username" id="userId" th:value="${#authentication.name}">
+            <input type="hidden" name="course" id="course" th:value="${{course}}">
+
+            <td><button type="submit" class="btn btn-success">Buy course</button></td>
+        </form>
+    </div>
+
+    <div sec:authorize="hasRole('ROLE_AUTHOR')">
+        <td><a th:href="@{/course/show_update_course_form/{id}(id=${course.id})}" class="btn btn-primary">Edit</a></td>
+        <td>
+            <form method="POST" th:action="@{/course/delete_course/{id}(id=${course.id})}">
+                <button type="submit" name="submit" value="value" class="btn btn-danger">DELETE</button>
+            </form>
+        </td>
+    </div>
+
+    <form action="#" th:action="@{/comment/}" th:method ="POST">
+        <input type="hidden" name="username" th:value="${#authentication.name}">
+        <input type="hidden" name="course" th:value="${{course}}">
+        <label for="name">Add your comment :</label>
+        <textarea required id="comment" name="comment" th:field="*{comment.comment}" placeholder="Course name" class="form-control col-4" rows="4" cols="50"
+                  maxlength="200"></textarea>
+
+        <button type="submit" class="btn btn-secondary">Add comment</button>
+    </form>
+
+    <p th:each="comment : ${commentList}">
+        <br/>
+        <br/>
+        <span th:text="${comment.user.username}"></span><br/>
+        <br/>
+        <span th:text="${comment.comment}"></span>
+    </p>
+</body>
+</html>
