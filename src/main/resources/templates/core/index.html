@@ -13,6 +13,10 @@
     </div>
     <div sec:authorize="hasRole('ROLE_USER')">
         <a href="logout">Logout</a>
+        <form action="#" th:action="@{/bought_courses/}" th:method="POST">
+            <input type="hidden" name="username" th:value="${#authentication.name}">
+            <button type="submit" class="btn btn-success">See bought courses</button>
+        </form>
     </div>
     <div sec:authorize="hasRole('ROLE_ADMIN')">
         <meta http-equiv="refresh" content="0;url=/admin">
@@ -43,6 +47,7 @@
                     <form action="#" th:action="@{/order/}" th:method="POST">
                         <input type="hidden" name="username" id="userId" th:value="${#authentication.name}">
                         <input type="hidden" name="course" id="course" th:value="${{course}}">
+
 
                         <td><button type="submit" class="btn btn-success">Buy course</button></td>
                     </form>

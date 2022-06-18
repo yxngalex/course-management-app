@@ -45,7 +45,7 @@
         <input type="hidden" name="username" th:value="${#authentication.name}">
         <input type="hidden" name="course" th:value="${{course}}">
         <label for="name">Add your comment :</label>
-        <textarea id="comment" name="comment" th:field="*{comment.comment}" placeholder="Course name" class="form-control col-4" rows="4" cols="50"
+        <textarea required id="comment" name="comment" th:field="*{comment.comment}" placeholder="Course name" class="form-control col-4" rows="4" cols="50"
                   maxlength="200"></textarea>
 
         <button type="submit" class="btn btn-secondary">Add comment</button>

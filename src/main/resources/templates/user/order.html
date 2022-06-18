@@ -30,7 +30,7 @@
             </div>
             <div sec:authorize="hasRole('ROLE_USER')">
                 <form action="#" th:action="@{/receipt/}" th:method="POST">
-                    <input type="hidden" name="orderDetails" id="orderDetails" th:value="${{orderDetails}}">
+                    <input type="hidden" name="order_details" id="orderDetails" th:value="${{orderDetails}}">
                     <td>
                         <button type="submit" class="btn btn-success">Buy</button>
                     </td>

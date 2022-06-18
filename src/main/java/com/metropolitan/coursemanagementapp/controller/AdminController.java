@@ -1,9 +1,10 @@
 package com.metropolitan.coursemanagementapp.controller;
 
+import com.metropolitan.coursemanagementapp.entity.Comment;
+import com.metropolitan.coursemanagementapp.entity.Course;
 import com.metropolitan.coursemanagementapp.entity.Role;
 import com.metropolitan.coursemanagementapp.entity.User;
-import com.metropolitan.coursemanagementapp.service.RoleService;
-import com.metropolitan.coursemanagementapp.service.UserService;
+import com.metropolitan.coursemanagementapp.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,9 @@ import java.util.List;
 public class AdminController {
     private final UserService userService;
     private final RoleService roleService;
+    private final CourseService courseService;
+    private final CommentService commentService;
+    private final RefundService refundService;
 
     @GetMapping()
     public String getAllUsers(Model model) {
@@ -71,4 +75,31 @@ public class AdminController {
         }
         return "admin/edit_user";
     }
+
+    @GetMapping("/courses")
+    public String getAllCourses(Model model){
+        List<Course> courseList = courseService.getAllCourses();
+        model.addAttribute("courseList", courseList);
+        return "admin/course_table";
+    }
+
+    @GetMapping("/course/{id}")
+    public String getAllComments(@PathVariable Integer id, Model model){
+        List<Comment> commentList = commentService.findAllByCourseId(id);
+        model.addAttribute("commentList", commentList);
+        return "admin/comment_table";
+    }
+
+    @GetMapping("/delete_comment/{id}")
+    public String deleteComment(@PathVariable Integer id, Model model){
+        commentService.deleteById(id);
+        return "redirect:/";
+    }
+
+    @GetMapping("/refunds/")
+    public String getAllRefundRequests(Model model){
+        model.addAttribute("refundList", refundService.getAllRefunds());
+        return "admin/refund_table";
+    }
+
 }

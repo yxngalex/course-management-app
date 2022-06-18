@@ -4,6 +4,7 @@ import com.metropolitan.coursemanagementapp.entity.*;
 import com.metropolitan.coursemanagementapp.service.ReceiptService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
@@ -16,7 +17,7 @@ public class ReceiptController {
     private final ReceiptService receiptService;
 
     @PostMapping()
-    public String saveReceipt(@RequestParam("order_details") OrderDetails orderDetails) {
+    public String saveReceipt(@RequestParam("order_details") OrderDetails orderDetails, Model model) {
 
         LocalDate date = LocalDate.now();
         Receipt receipt = new Receipt();
@@ -24,8 +25,9 @@ public class ReceiptController {
         receipt.setDate(date);
         receiptService.saveReceipt(receipt);
 
-        // Namestiti da redirektuje na receipt stranu
-        return "redirect:../receipt/";
+        model.addAttribute("receipt", receipt);
+
+        return "user/receipt";
     }
 
 }

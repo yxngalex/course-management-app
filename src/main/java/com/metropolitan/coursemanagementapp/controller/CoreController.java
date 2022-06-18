@@ -1,20 +1,15 @@
 package com.metropolitan.coursemanagementapp.controller;
 
-import com.metropolitan.coursemanagementapp.entity.Comment;
-import com.metropolitan.coursemanagementapp.entity.Course;
-import com.metropolitan.coursemanagementapp.entity.Role;
-import com.metropolitan.coursemanagementapp.entity.User;
+import com.metropolitan.coursemanagementapp.entity.*;
 import com.metropolitan.coursemanagementapp.repository.CommentRepository;
-import com.metropolitan.coursemanagementapp.service.CommentService;
-import com.metropolitan.coursemanagementapp.service.CourseService;
-import com.metropolitan.coursemanagementapp.service.RoleService;
-import com.metropolitan.coursemanagementapp.service.UserService;
+import com.metropolitan.coursemanagementapp.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -26,6 +21,8 @@ public class CoreController {
     private final RoleService roleService;
     private final CourseService courseService;
     private final CommentService commentService;
+    private final ReceiptService receiptService;
+    private final RefundService refundService;
 
     @GetMapping("/")
     public String getAllUsers(Model model) {
@@ -72,7 +69,39 @@ public class CoreController {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         userService.saveUser(user);
-        System.out.println(user);
         return "redirect:/login";
+    }
+
+    @PostMapping("/bought_courses")
+    public String boughtCourses(@RequestParam("username") String username, Model model) {
+        User user = userService.getUserByUsername(username);
+
+        List<Receipt> receiptList = receiptService.getAllReceipts();
+        List<Course> usersBoughtCourses = new ArrayList<>();
+        for(Receipt receipt : receiptList){
+            if(receipt.getOrderDetails().getOrder().getUser().getId() == user.getId()){
+                usersBoughtCourses.add(receipt.getOrderDetails().getCourse());
+            }
+        }
+        model.addAttribute("courseList", usersBoughtCourses);
+        model.addAttribute("comment", "");
+        return "core/bought_courses";
+    }
+
+    @PostMapping("/bought_courses/refund")
+    public String boughtCoursesRefund(@RequestParam("username") String username,
+                                      @RequestParam("course") Course course,
+                                      @RequestParam("comment") String refundComment) {
+
+        User user = userService.getUserByUsername(username);
+
+        Refund refund = new Refund();
+
+        refund.setRefundComment(refundComment);
+        refund.setUser(user);
+        refund.setCourse(course);
+        refundService.saveRefund(refund);
+
+        return "redirect:/";
     }
 }

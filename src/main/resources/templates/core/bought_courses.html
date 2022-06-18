@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>User's courses</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1>Courses</h1>
+    <table class="table table-striped table-responsive-md">
+        <thead>
+        <tr>
+            <th>Course name</th>
+            <th>Course description</th>
+            <td>Preview course</td>
+            <div sec:authorize="hasRole('ROLE_USER')">
+                <th>Course operations</th>
+            </div>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="course :  ${courseList}">
+            <td th:text="${course.name}"></td>
+            <td th:text="${course.description}"></td>
+            <form action="#" th:action="@{/bought_courses/refund/}" th:method="POST">
+                <input type="hidden" name="username" id="userId" th:value="${#authentication.name}">
+                <input type="hidden" name="course" id="course" th:value="${{course}}">
+                <td><input required id="name" name="comment" th:value="*{comment}" placeholder="Refund reason"  class="form-control col-4"
+                          maxlength="200"></td>
+                <td><button type="submit" class="btn btn-secondary">Request a refund</button></td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
