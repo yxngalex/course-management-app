@@ -38,6 +38,6 @@ public class RefundServiceImpl implements RefundService {
 
     @Override
     public void deleteById(Integer refundId) {
-
+        refundRepository.deleteById(refundId);
     }
 }

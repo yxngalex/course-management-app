@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>List of requested refunds</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 </head>
 <body>
 <div class="container">
@@ -10,33 +12,26 @@
     <table class="table table-striped table-responsive-md">
         <thead>
         <tr>
+            <th>User username</th>
+            <th>Refund comment</th>
             <th>Course name</th>
-            <th>Course price</th>
-            <td>Preview course</td>
-            <div sec:authorize="hasRole('ROLE_AUTHOR')">
-                <th>Course operations</th>
-            </div>
+            <th>Refund operations</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="refund :  ${refundList}">
             <td th:text="${refund.user.username}"></td>
-            <td th:text="${course.price}"></td>
-            <form action="#" th:action="@{/no_refund/{id}(id=${refund.id})}" th:method="GET">
+            <td th:text="${refund.refundComment}"></td>
+            <td th:text="${refund.course.name}"></td>
+            <form action="#" th:action="@{/admin/no_refund/{id}(id=${refund.id})}" th:method="GET">
                 <td><button type="submit" class="btn btn-danger">Decline refund</button></td>
             </form>
-            <form action="#" th:action="@{/refund/{id}(id=${refund.id})}" th:method="GET">
+
+            <form action="#" th:action="@{/admin/refund/{id}(id=${refund.id})}" th:method="POST">
+                <input type="hidden" name="id" id="userId" th:value="${refund.user.id}">
+                <input type="hidden" name="course" id="course" th:value="${{refund.course}}">
                 <td><button type="submit" class="btn btn-danger">Accept refund</button></td>
             </form>
-<!--            <div sec:authorize="hasRole('ROLE_USER')">-->
-<!--                <form action="#" th:action="@{/order/}" th:method="POST">-->
-<!--                    <input type="hidden" name="username" id="userId" th:value="${#authentication.name}">-->
-<!--                    <input type="hidden" name="course" id="course" th:value="${{course}}">-->
-
-
-<!--                    <td><button type="submit" class="btn btn-success">Buy course</button></td>-->
-<!--                </form>-->
-<!--            </div>-->
         </tr>
         </tbody>
     </table>

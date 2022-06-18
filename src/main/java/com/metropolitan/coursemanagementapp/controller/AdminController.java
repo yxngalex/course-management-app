@@ -1,9 +1,6 @@
 package com.metropolitan.coursemanagementapp.controller;
 
-import com.metropolitan.coursemanagementapp.entity.Comment;
-import com.metropolitan.coursemanagementapp.entity.Course;
-import com.metropolitan.coursemanagementapp.entity.Role;
-import com.metropolitan.coursemanagementapp.entity.User;
+import com.metropolitan.coursemanagementapp.entity.*;
 import com.metropolitan.coursemanagementapp.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,6 +19,8 @@ public class AdminController {
     private final CourseService courseService;
     private final CommentService commentService;
     private final RefundService refundService;
+    private final OrderService orderService;
+    private final OrderDetailsService orderDetailsService;
 
     @GetMapping()
     public String getAllUsers(Model model) {
@@ -100,6 +99,28 @@ public class AdminController {
     public String getAllRefundRequests(Model model){
         model.addAttribute("refundList", refundService.getAllRefunds());
         return "admin/refund_table";
+    }
+
+    @PostMapping("/refund/{id}")
+    public String refund(@PathVariable Integer id, @RequestParam("course") Course course, @RequestParam("id") Integer userId){
+
+        List<OrderDetails> orderDetailsList = orderDetailsService.getAllOrderDetails();
+
+        for(OrderDetails o : orderDetailsList){
+            if(o.getCourse().getId() == course.getId()){
+                Order order = o.getOrder();
+                orderDetailsService.deleteById(o.getId());
+                orderService.deleteById(order.getId());
+            }
+        }
+        refundService.deleteById(id);
+        return "redirect:/";
+    }
+
+    @GetMapping("/no_refund/{id}")
+    public String noRefund(@PathVariable Integer id){
+        refundService.deleteById(id);
+        return "redirect:/";
     }
 
 }
