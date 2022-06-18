@@ -7,6 +7,7 @@
           integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 </head>
 <body>
+<a class="btn btn-primary" href="http://localhost:8080/logout">Logout</a>
 <div class="container">
     <h1>Update course</h1>
     <form action="#" th:action="@{/course/save_course}" th:object="${course}" th:method ="POST">
@@ -19,10 +20,10 @@
         <textarea id="name" th:field="*{name}" placeholder="Course name" class="form-control col-4" rows="4" cols="50" maxlength="200" ></textarea>
 
         <label for="description">Course description</label>
-        <input id="description" type="text" th:field="*{description}" placeholder="Course description" class="form-control col-4">
+        <input required id="description" type="text" th:field="*{description}" placeholder="Course description" class="form-control col-4">
 
         <label for="price">Price</label>
-        <input id="price" type="number" th:field="*{price}" placeholder="Course price" class="form-control col-4">
+        <input required id="price" type="number" th:field="*{price}" placeholder="Course price" class="form-control col-4">
 
         <button type="submit" class="btn btn-info col-2">Save changes</button>
     </form>

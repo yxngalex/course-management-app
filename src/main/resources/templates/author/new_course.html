@@ -7,6 +7,7 @@
           integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 </head>
 <body>
+<a class="btn btn-primary" href="http://localhost:8080/logout">Logout</a>
 <h1>Update course</h1>
 <form action="#" th:action="@{/course/save_course}" th:object="${course}" method="POST">
     <input type="hidden" th:field="*{id}">

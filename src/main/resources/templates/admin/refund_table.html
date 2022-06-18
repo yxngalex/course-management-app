@@ -30,7 +30,7 @@
             <form action="#" th:action="@{/admin/refund/{id}(id=${refund.id})}" th:method="POST">
                 <input type="hidden" name="id" id="userId" th:value="${refund.user.id}">
                 <input type="hidden" name="course" id="course" th:value="${{refund.course}}">
-                <td><button type="submit" class="btn btn-danger">Accept refund</button></td>
+                <td><button type="submit" class="btn btn-success">Accept refund</button></td>
             </form>
         </tr>
         </tbody>
